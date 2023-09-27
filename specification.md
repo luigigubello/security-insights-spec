@@ -154,10 +154,10 @@ The security-testing section contains a list of tools your project has incorpora
 - `tool-url`: **String** beginning with **https://**
 - `integration` (Required)
     - `ad-hoc` (Required): Is the tool used manually on an ad-hoc basis?
-    - **Boolean**
+      - **Boolean**
     - `before-release` (Required): Does the tool run automatically before every release?
-    - **Boolean**
+      - **Boolean**
     - `ci` (Required): Does the tool run as part of continuous integration tests?
-    - **Boolean**
+      - **Boolean**
     - `tool-rulesets`: Are any premade rulesets used from this tool?
-    - **List** of **String** entries
+      - **List** of **String** entries
