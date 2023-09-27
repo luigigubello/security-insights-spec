@@ -26,15 +26,15 @@ header:
 Now let’s break that down:
 - `schema-version` (Required): Provide the version of the specification that you are adhering to.
   - **String**
-- `last-updated` (Required): Date of the most recent change to this file.
+- `last-updated`: Date of the most recent change to this file.
   - **Date**
-- `last-reviewed` (Required): Date this file was last reviewed by a project maintainer to confirm holistic accuracy.
+- `last-reviewed`: Date this file was last reviewed by a project maintainer to confirm holistic accuracy.
   - **Date**
 - `expiration-date` (Required): Date this file should no longer be considered valid. Maximum one year from the date it was last reviewed.
   - **Date-time**
 - `project-url` (Required): URI for the project repository that this document pertains to.
   - **String** beginning with **https://**
-- `commit-hash` (Required): The last commit on the repository that this document pertains to.
+- `commit-hash`: The last commit on the repository that this document pertains to.
   - **String** matching the git SHA format
 - `changelog`: URI for the changelog for the project.
   - **String** beginning with **https://**
@@ -44,7 +44,8 @@ Now let’s break that down:
   - **String** beginning with **https://**
 
 ## Project Lifecycle
-The project-lifecycle section contains information about how the project is maintained. This is the first of many places where we’ll see conditional requirements in the schema.
+
+The purpose of the project-lifecycle section is to describe support, maintenance, and fitness expectations for the consumer. For example, a project may be just getting started, be mature, be in "bugfix only" mode, or be completely abandoned. It helps clarify expectations all around.
 
 ```yaml
 project-lifecycle:
