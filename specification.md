@@ -4,6 +4,8 @@ This specification provides a mechanism for projects to report information about
 
 Values that are included within the specification may be required or optional. Optional values are reccommendations from the Open Source Security Foundation's _Identifying Security Threats Working Group_, but may not be prudent for all use cases.
 
+Example implementations can be found on the specification's [GitHub repo]("https://github.com/ossf/security-insights-spec/pull/37").
+
 The following values are part of Security Insights Specification `v1.0.0`
 
 ## Header
