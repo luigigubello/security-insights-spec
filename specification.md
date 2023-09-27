@@ -28,7 +28,7 @@ Now let’s break that down:
   - **String**
 - `last-updated` (Required): Date of the most recent change to this file.
   - **Date**
-- `last-reviewed` (Required): Date this file was last reviewed to confirm holistic accuracy.
+- `last-reviewed` (Required): Date this file was last reviewed by a project maintainer to confirm holistic accuracy.
   - **Date**
 - `expiration-date` (Required): Date this file should no longer be considered valid. Maximum one year from the date it was last reviewed.
   - **Date-time**
