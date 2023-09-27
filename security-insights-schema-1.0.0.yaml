@@ -61,11 +61,7 @@ properties:
                 format: iri
                 pattern: '^https?:\/\/'
         required:
-        - parent-security-yaml
         - expiration-date
-        - last-updated
-        - last-reviewed
-        - commit-hash
         - project-url
         - schema-version
         type: object
@@ -94,6 +90,17 @@ properties:
                 type: string
                 format: iri
                 pattern: '^https?:\/\/'
+            release-cycle:
+                $id: '#/properties/project-lifecycle/properties/release-cycle'
+                description: 'Link to the project release cycle.'
+                type: string
+                format: iri
+                pattern: '^https?:\/\/'
+            release-process:
+                $id: '#/properties/project-lifecycle/properties/release-process'
+                description: 'Shortly describe the release process. Maximum length 560 chars.'
+                type: string
+                pattern: '^(.|\n){1,560}$'
             stage:
                 $id: '#/properties/project-lifecycle/properties/stage'
                 description: 'Define if the project is still active or not.'
@@ -251,8 +258,82 @@ properties:
                 required:
                 - threat-model-created
                 type: object
-        required:
-        - threat-model
+            self-assessment:
+                $id: '#/properties/security-artifacts/properties/self-assessment'
+                additionalProperties: false
+                properties:
+                    self-assessment-created:
+                        $id: '#/properties/security-artifacts/properties/self-assessment/properties/self-assessment-created'
+                        description: 'Define whether a security self assessment for the project has been created. A false value may be used to add comments regarding the status of the assessment.'
+                        type: boolean
+                    evidence-url:
+                        $id: '#/properties/security-artifacts/properties/self-assessment/properties/evidence-url'
+                        additionalItems: false
+                        items:
+                            $id: '#/properties/security-artifacts/properties/self-assessment/properties/evidence-url/items'
+                            anyOf:
+                            -   $id: '#/properties/security-artifacts/properties/self-assessment/properties/evidence-url/items/anyOf/0'
+                                description: 'Link to the evidence of the security self assessment.'
+                                type: string
+                                format: iri
+                                pattern: '^https?:\/\/'
+                        type: array
+                        uniqueItems: true
+                    comment:
+                        $id: '#/properties/security-artifacts/properties/self-assessment/properties/comment'
+                        description: 'Additional context regarding the security self assessment or its status. Maximum length 560 chars.'
+                        type: string
+                        pattern: '^(.|\n){1,560}$'
+                if:
+                    properties:
+                        self-assessment-created:
+                            const: true
+                then:
+                    required:
+                    - evidence-url
+                required:
+                - self-assessment-created
+                type: object
+            other-artifacts:
+                $id: '#/properties/security-artifacts/properties/other-artifacts'
+                anyOf:
+                -   $id: '#/properties/security-testing/items/anyOf/0'
+                    additionalProperties: false
+                    properties:
+                        artifact-name: 
+                            $id: '#/properties/security-artifacts/properties/other-artifacts/anyOf/0/properties/name'
+                            description: 'Name of the security artifact.'
+                            type: string
+                        artifact-created:
+                            $id: '#/properties/security-artifacts/properties/other-artifacts/anyOf/0/properties/artifact-created'
+                            description: 'Define whether this artifact has been created. A false value may be used to add comments regarding the status of the artifact.'
+                            type: boolean
+                        evidence-url:
+                            $id: '#/properties/security-artifacts/properties/other-artifacts/anyOf/0/properties/evidence-url'
+                            additionalItems: false
+                            items:
+                                $id: '#/properties/security-artifacts/properties/other-artifacts/anyOf/0/properties/evidence-url/items'
+                                anyOf:
+                                -   $id: '#/properties/security-artifacts/properties/other-artifacts/anyOf/0/properties/evidence-url/items/anyOf/0'
+                                    description: 'Link to the evidence of the security artifact.'
+                                    type: string
+                                    format: iri
+                                    pattern: '^https?:\/\/'
+                            type: array
+                            uniqueItems: true
+                        comment:
+                            $id: '#/properties/security-artifacts/properties/self-assessment/anyOf/0/properties/comment'
+                            description: 'Additional context regarding the security artifact or its status. Maximum length 560 chars.'
+                            type: string
+                            pattern: '^(.|\n){1,560}$'
+                    if:
+                        properties:
+                            artifact-created:
+                                const: true
+                    then:
+                        required:
+                        - evidence-url
+                    type: object
         type: object
     security-testing:
         $id: '#/properties/security-testing'
@@ -301,9 +382,9 @@ properties:
                         uniqueItems: true
                     tool-type:
                         $id: '#/properties/security-testing/items/anyOf/0/properties/tool-type'
-                        description: 'Type of security test: `sast`, `dast`, `iast` or `fuzzer`.'
+                        description: 'Type of security test: `sast`, `dast`, `iast`, `fuzzer` or `sca`.'
                         type: string
-                        enum: ['sast', 'dast', 'iast', 'fuzzer']
+                        enum: ['sast', 'dast', 'iast', 'fuzzer', 'sca']
                     tool-url:
                         $id: '#/properties/security-testing/items/anyOf/0/properties/tool-url'
                         description: 'Link to the security test.'
@@ -528,8 +609,8 @@ properties:
                                 type: string
                                 format: iri
                                 pattern: '^https?:\/\/'
-                            sbom-name:
-                                $id: '#/properties/dependencies/items/anyOf/0/properties/sbom-name'
+                            sbom-format:
+                                $id: '#/properties/dependencies/items/anyOf/0/properties/sbom-format'
                                 description: 'Name of the SBOM standard used.'
                                 type: string
                             sbom-url:
@@ -538,25 +619,51 @@ properties:
                                 type: string
                                 format: iri
                                 pattern: '^https?:\/\/'
+                            sbom-creation:
+                                $id: '#/properties/dependencies/items/anyOf/0/properties/sbom-creation'
+                                description: 'Description of how the SBOM is created. Maximum length 560 characters.'
+                                type: string
+                                pattern: '^(.|\n){1,560}$'
                 type: array
                 uniqueItems: true
-        if:
-            properties:
-                third-party-packages:
-                    const: true
-        then:
-            required:
-            - dependencies-lists
-        required:
-        - third-party-packages
+            dependencies-lifecycle:
+                $id: '#/properties/dependencies/properties/dependencies-lifecycle'
+                additionalProperties: false
+                properties:
+                    policy-url:
+                        $id: '#/properties/dependencies/properties/dependencies-lifecycle/properties/policy-url'
+                        description: 'Link to the dependencies lifecycle policy.'
+                        type: string
+                        format: iri
+                        pattern: '^https?:\/\/'
+                    comment:
+                        $id: '#/properties/dependencies/properties/dependencies-lifecycle/properties/comment'
+                        description: 'Summary about the dependencies lifecycle policy, third-party packages updating process, and deprecation process. Maximum length 560 chars.'
+                        type: string
+                        pattern: '^(.|\n){1,560}$'
+                type: object
+            env-dependencies-policy:
+                $id: '#/properties/dependencies/properties/env-dependencies-policy'
+                additionalProperties: false
+                properties:
+                    policy-url:
+                        $id: '#/properties/dependencies/properties/env-dependencies-policy/properties/policy-url'
+                        description: 'Link to the enviroment dependencies policy.'
+                        type: string
+                        format: iri
+                        pattern: '^https?:\/\/'
+                    comment:
+                        $id: '#/properties/dependencies/properties/env-dependencies-policy/properties/comment'
+                        description: 'Summary about how third-party dependencies are adopted and consumed in the different environments (dev, test, prod). Maximum length 560 chars.'
+                        type: string
+                        pattern: '^(.|\n){1,560}$'
+                type: object
         type: object
 required:
 - header
 - project-lifecycle
 - contribution-policy
 - distribution-points
-- security-artifacts
 - security-contacts
 - vulnerability-reporting
-- dependencies
 type: object
