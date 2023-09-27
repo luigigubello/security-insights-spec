@@ -1,5 +1,9 @@
 # Specification
 
+This specification provides a mechanism for projects to report information about their security in a machine-processable way. It is formatted as a YAML file to make it easy to read and edit by humans.
+
+Values that are included within the specification may be required or optional. Optional values are reccommendations from the Open Source Security Foundation's _Identifying Security Threats Working Group_, but may not be prudent for all use cases.
+
 The following values are part of Security Insights Specification `v1.0.0`
 
 ## Header
