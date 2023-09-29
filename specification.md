@@ -325,3 +325,29 @@ This section is an array.
 - `comment`
   - **Description:** Provide additional context on the report, in particular, if the report document is not publicly shared.
   - **Type:** String. At most 560 characters.
+
+## Security Contacts
+
+```yaml
+security-contacts:
+- type: email
+  value: joe.bob@email.com
+  primary: true
+- type: email
+  value: alice.bob@email.com
+  primary: false
+```
+
+### Fields
+
+This section is an array.
+
+- `primary`
+  - **Description:** Define if the provided contact is a primary contact or not. 
+  - **Type:** Boolean.
+- `type` (Required)
+  - **Description:** Provide the type of contact: email, phone, or website.
+  - **Type:** String. The contact type must match one of the values defined in the field `enum` of the schema.
+- `value` (Required)
+  - **Description:** Provide a valid security contact.
+  - **Type:** String. The value must be an e-mail contact, a URI, or a mobile phone.
