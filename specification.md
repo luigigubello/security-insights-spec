@@ -262,7 +262,7 @@ security-testing:
 
 ### Fields
 
-This section is an array of objects.
+This section is an array.
 
 - `integration` (Required)
   - **Description:** Additional context about the security test. This information can help to understand how the test works and how it is integrated into the CI/CD of the project.
@@ -270,41 +270,58 @@ This section is an array of objects.
     - **Description:** Define if the test is an ad-hoc security test.
     - **Type:** Boolean.
   - `ci` (Required)
-    - **Description:**
+    - **Description:** Define if the security test is part of the CI.
     - **Type:** Boolean.
   - `before-release` (Required)
-    - **Description:** 
+    - **Description:** Define if the security test runs before the release.
     - **Type:** Boolean.
 - `tool-name` (Required)
-  - **Description:**
-  - **Type:**
+  - **Description:** Name of the tool or service used to scan or analyze the project.
+  - **Type:** String.
 - `tool-rulesets`
-  - **Description:**
-  - **Type:**
+  - **Description:** Tool rules used to scan or analyze the project.
+  - **Type:** Array. Every item must be a string.
 - `tool-type` (Required)
-  - **Description:**
-  - **Type:**
+  - **Description:** Type of security test: SAST, DAST, IAST, fuzzing or software composition analysis (SCA).
+  - **Type:** String. The value must match one of the values defined in the field `enum` of the schema.
 - `tool-url`
-  - **Description:**
-  - **Type:**
+  - **Description:** Whenever possible, a URL to the security test (e.g. GitHub Action, CircleCI YAML, etc). This is strong evidence of standards and tests in place.
+  - **Type:** String. The provided URL must meet the IRI standard (RFC 3987) and starts with `https://`.
 - `tool-version` (Required)
-  - **Description:**
-  - **Type:**
+  - **Description:** Version of the used tool or service. This information - together with previously provided values - can help Security Insights consumers reproduce tests for the project.
+  - **Type:** String.
 - `comment`
-  - **Description:**
-  - **Type:**
+  - **Description:** Provide additional context on the used tool or service.
+  - **Type:** String. At most 560 characters.
 
+## Security Assessments
 
-- `tool-name` (Required): **String**
-- `tool-type` (Required): **String**, values may be sast, dast, iast, fuzzer
-- `tool-version` (Required): **String**
-- `tool-url`: **String** beginning with **https://**
-- `integration` (Required)
-    - `ad-hoc` (Required): Is the tool used manually on an ad-hoc basis?
-      - **Boolean**
-    - `before-release` (Required): Does the tool run automatically before every release?
-      - **Boolean**
-    - `ci` (Required): Does the tool run as part of continuous integration tests?
-      - **Boolean**
-    - `tool-rulesets`: Are any premade rulesets used from this tool?
-      - **List** of **String** entries
+```yaml
+security-assessments:
+- auditor-name: third-party auditor
+  auditor-url: https://auditor.foo.bar.com
+  auditor-report: https://foo.bar/report.pdf
+  report-year: 2021
+  comment: |
+    foo bar
+```
+
+### Fields
+
+This section is an array.
+
+- `auditor-name` (Required)
+  - **Description:** Name of the third-party security auditor.
+  - **Type:** String.
+- `auditor-report`
+  - **Description:** URI to the security report provided by the auditor. Whenever possible, it is recommended to share the original audit report (e.g. pentest report).
+  - **Type:** String. The provided URL must meet the IRI standard (RFC 3987) and starts with `https://`.
+- `auditor-url` (Required)
+  - **Description:** URI to the auditor website.
+  - **Type:** String. The provided URL must meet the IRI standard (RFC 3987) and starts with `https://`.
+- `report-year` (Required)
+  - **Description:** Year of the report.
+  - **Type:** integer
+- `comment`
+  - **Description:** Provide additional context on the report, in particular, if the report document is not publicly shared.
+  - **Type:** String. At most 560 characters.
