@@ -6,7 +6,7 @@ on:
     - 'SECURITY-INSIGHTS.yml'
 
 jobs:
-  dependabot:
+  si-validator:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
