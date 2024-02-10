@@ -1,6 +1,6 @@
 header:
   schema-version: 1.0.0
-  last-updated: '2023-09-28'
+  last-updated: '2023-09-28a'
   last-reviewed: '2023-09-28'
   expiration-date: '2024-09-28T01:00:00.000Z'
   project-url: https://github.com/ossf/security-insights-spec
