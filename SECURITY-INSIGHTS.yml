@@ -14,7 +14,7 @@ project-lifecycle:
 contribution-policy:
   accepts-pull-requests: true
   accepts-automated-pull-requests: true
-  code-of-conduct: https://openssf.org/community/code-of-conduct
+  code-of-conduct: https://openssf.org/community/code-of-conduct/
 documentation:
 - https://github.com/ossf/security-insights-spec/blob/main/specification.md
 distribution-points:
