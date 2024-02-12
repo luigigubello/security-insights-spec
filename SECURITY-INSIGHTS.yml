@@ -6,7 +6,7 @@ header:
   project-url: https://github.com/ossf/security-insights-spec
   project-release: '1.0.0'
 project-lifecycle:
-  status: active
+  status: activexx
   bug-fixes-only: false
   core-maintainers:
   - github:luigigubello
